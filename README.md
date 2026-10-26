@@ -1,6 +1,6 @@
 # Dietary-policy-validator
 
-A beginner-friendly FastAPI service that checks meal plans against dietary policies stored as JSON files. It sums nutrient values from foods, checks per-meal and per-day rules, and reports errors separately from warnings.
+A FastAPI service that checks meal plans against dietary policies stored as JSON files. It sums nutrient values from foods, checks per-meal and per-day rules, and reports errors separately from warnings.
 
 ## Run locally
 
@@ -43,43 +43,5 @@ Example response:
 }
 ```
 
-Each food reports its nutrient amounts; the service adds those values to evaluate each meal and the full day. For example, a borderline plan is sent the same way:
+Each food reports its nutrient amounts; the service adds those values to evaluate each meal a. 
 
-```powershell
-curl.exe -X POST http://127.0.0.1:8000/validate `
-  -H "Content-Type: application/json" `
-  --data-binary "@examples/borderline.json"
-```
-
-The request body can also be created directly in Postman using **POST** `http://127.0.0.1:8000/validate`, selecting **Body → raw → JSON**, and entering:
-
-```json
-{
-  "policy_id": "low_sodium_hospital",
-  "meals": [
-    {
-      "name": "Lunch",
-      "foods": [
-        {
-          "name": "Soup",
-          "nutrients": { "sodium_mg": 850 }
-        },
-        {
-          "name": "Sandwich",
-          "nutrients": { "sodium_mg": 600 }
-        }
-      ]
-    }
-  ]
-}
-```
-
-List available policies with **GET** `http://127.0.0.1:8000/policies`.
-
-## Sample plans and tests
-
-`examples/compliant.json`, `examples/borderline.json`, and `examples/non_compliant.json` are ready-to-send diabetic hospital policy requests.
-
-```powershell
-py -m pytest
-```
